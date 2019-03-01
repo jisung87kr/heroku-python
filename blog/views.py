@@ -11,7 +11,10 @@ from .forms import PostForm
 def index(request):
     posts = Post.objects.all().order_by('-published_date')
     paginator = Paginator(posts, 10)
-    page = request.GET.get('page')
+    if request.GET.get('page'):
+        page = request.GET.get('page')
+    else :
+        page = 1
     contacts = paginator.get_page(page)
     page_range = 5
     current_block = math.ceil(int(page)/page_range)
