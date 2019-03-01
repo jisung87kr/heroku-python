@@ -1,34 +1,60 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+<h1>BLOG LIST</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in contacts %}
+        <tr>
+            <td>
+                <a href="{% url 'blog:post' post.pk %}">{{ post.title }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-<ul class="list-group">
-    {% for post in contacts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{% url 'blog:post' post.pk %}">
-            {{ post.title }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-<div class="pagination">
-        <span class="step-links">
-            {% if contacts.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ contacts.previous_page_number }}">previous</a>
-            {% endif %}
-    
-            {% for i in p_range %}
-                <a href="?page={{i}}" {% if contacts.number == i %}class="active" {% endif %}>{{i}}</a>
-            {% endfor %}
-    
-            {% if contacts.has_next %}
-                <a href="?page={{ contacts.next_page_number }}">next</a>
-                <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
+<form class="form-inline" action="{% url 'blog:index' %}" method="get">
+    <div class="input-group">
+        <select name="fd_name" id="" class="form-control">
+            <option value="title">title</option>
+            <option value="content">content</option>
+        </select>
+        <input type="text" class="form-control" name='q'>
+        <button class="btn btn-secondary" type="submit">Search</button>
     </div>
+</form>
+
+<nav>
+    <ul class="pagination">
+        {% if contacts.has_previous %}
+        <li>
+            <a href="?page=1">&laquo; first</a>
+        </li>
+        <li>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        </li>
+        {% endif %}
+        {% for i in p_range %}
+        <li>
+            <a href="?page={{i}}" class="{% if contacts.number == i %} active {% endif %}">{{i}}</a>
+        </li>
+        {% endfor %}
+        {% if contacts.has_next %}
+        <li>
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+        </li>
+        <li class="pagr-item">
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
 
 <a href="{% url 'blog:write' %}" class="btn btn-primary">글쓰기</a>
 {% endblock %}

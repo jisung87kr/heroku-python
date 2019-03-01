@@ -9,8 +9,14 @@ from .forms import PostForm
 
 # Create your views here.
 def index(request):
-    posts = Post.objects.all().order_by('-published_date')
-    paginator = Paginator(posts, 10)
+    if request.GET.get('q'):
+            variable_column = request.GET.get('fd_name')
+            search_type = 'contains'
+            filter = variable_column + '__' + search_type
+            posts = Post.objects.filter(**{ filter: request.GET.get('q') }).order_by('-published_date')
+    else :
+        posts = Post.objects.all().order_by('-published_date')
+    paginator = Paginator(posts, 3)
     if request.GET.get('page'):
         page = request.GET.get('page')
     else :
