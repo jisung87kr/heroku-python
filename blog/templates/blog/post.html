@@ -28,7 +28,7 @@
                 <img src="{{ post.upload.url }}" alt="">
             </a>
             {% endif %}
-            {{ post.content }}
+            {{ post.content | safe }}
         </td>
     </tr>
 </table>
