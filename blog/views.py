@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.utils import timezone
-from models import Post
+from .models import Post
 from .forms import PostForm
 
 # Create your views here.
