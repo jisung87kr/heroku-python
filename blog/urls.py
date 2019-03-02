@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:pk>/post/', views.post, name='post'),
     path('write/', views.write, name='write'),
+    path('<int:pk>/modi/', views.modi, name='modi'),
 ]

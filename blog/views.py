@@ -38,16 +38,25 @@ def post(request, pk):
 
 def write(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.title = request.POST['title']
             post.author = request.user
-            post.content = request.POST['content']
-            post.created_date = request.POST['created_date']
-            post.published_date = request.POST['published_date']
             post.save()
             return HttpResponseRedirect(reverse('blog:post', args=(post.pk,)))
     else :
         form = PostForm()
         return render(request, 'blog/write.html', {'form': form})
+
+def modi(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return HttpResponseRedirect(reverse('blog:post', args=(post.pk,)))
+    else :
+        form = PostForm(instance=post)
+    return render(request, 'blog/write.html', {'form': form})

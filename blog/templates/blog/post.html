@@ -22,17 +22,19 @@
     <tr>
         <th>content</th>
         <td>
+            {% if post.upload%}
             <img src="" alt="">
             <a href="{{ post.upload.url }}">
                 <img src="{{ post.upload.url }}" alt="">
             </a>
-            
+            {% endif %}
             {{ post.content }}
         </td>
     </tr>
 </table>
 
-<a href="{% url 'blog:index' %}" class="btn btn-primary">목록</a>
+<a href="{% url 'blog:index' %}" class="btn btn-default">목록</a>
 <a href="{% url 'blog:write' %}" class="btn btn-primary">글쓰기</a>
+<a href="{% url 'blog:modi' post.pk %}" class="btn btn-success">수정</a>
 {% endblock %}
 
