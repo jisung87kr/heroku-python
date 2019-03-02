@@ -7,6 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 import hello.views
+import blog.views
 
 # To add a new path, first import the app:
 # import blog
@@ -21,7 +22,9 @@ urlpatterns = [
     path("db/", hello.views.db, name="db"),
     path('blog/', include('blog.urls')),
     path("admin/", admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

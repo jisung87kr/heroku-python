@@ -1,7 +1,7 @@
 import math
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator
 from django.urls import reverse
 from .models import Post

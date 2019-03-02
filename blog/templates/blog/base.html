@@ -20,6 +20,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'blog:index' %}">BLOG</a>
+            </div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'blog:write' %}" class="btn btn-default navbar-btn">글쓰기</a>
+            {% endif %}
+            <p class="navbar-text navbar-right">
+                Signed in as {{ user }} / 
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="navbar-link">logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="navbar-link">login</a>
+                {% endif %}
+            </p>
+            
+        </div>
+    </nav>
     <div id="container" class="container">
         {% block content %}
         {% endblock %}
