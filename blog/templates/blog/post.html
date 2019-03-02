@@ -21,7 +21,14 @@
     </tr>
     <tr>
         <th>content</th>
-        <td>{{ post.content }}</td>
+        <td>
+            <img src="" alt="">
+            <a href="{{ post.upload.url }}">
+                <img src="{{ post.upload.url }}" alt="">
+            </a>
+            
+            {{ post.content }}
+        </td>
     </tr>
 </table>
 
