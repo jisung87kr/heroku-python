@@ -33,6 +33,17 @@
     </tr>
 </table>
 
+<nav>
+    <ul class="pager">
+        {% if prevPost.pk %}
+        <li><a href="{% url 'blog:post' prevPost.pk %}">Previous</a></li>
+        {% endif %}
+        {% if nextPost.pk %}
+        <li><a href="{% url 'blog:post' nextPost.pk %}">Next</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
 <div class="text-center">
     <a href="{% url 'blog:index' %}" class="btn btn-default">목록</a>
     <a href="{% url 'blog:modi' post.pk %}" class="btn btn-primary">수정</a>

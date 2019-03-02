@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.utils import timezone
 from .models import Post
 from .forms import PostForm
 
@@ -13,10 +14,10 @@ def index(request):
             variable_column = request.GET.get('fd_name')
             search_type = 'contains'
             filter = variable_column + '__' + search_type
-            posts = Post.objects.filter(**{ filter: request.GET.get('q') }).order_by('-published_date')
+            posts = Post.objects.filter(**{ filter: request.GET.get('q') }, published_date__lte = timezone.now()).order_by('-published_date')
     else :
-        posts = Post.objects.all().order_by('-published_date')
-    paginator = Paginator(posts, 3)
+        posts = Post.objects.filter(published_date__lte = timezone.now()).order_by('-published_date')
+    paginator = Paginator(posts, 10)
     if request.GET.get('page'):
         page = request.GET.get('page')
     else :
@@ -34,7 +35,13 @@ def index(request):
 
 def post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post.html', {'post': post})
+    prevPost = Post.objects.filter(published_date__lte = timezone.now(), published_date__gt=post.published_date).order_by('published_date').first()
+    nextPost = Post.objects.filter(published_date__lte = timezone.now(), published_date__lt=post.published_date).order_by('-published_date').first()
+    return render(request, 'blog/post.html', {
+        'post': post,
+        'prevPost' : prevPost,
+        'nextPost' : nextPost,
+        })
 
 def write(request):
     if request.method == 'POST':

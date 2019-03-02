@@ -27,10 +27,10 @@
                 {{ post.author }}
             </td>
             <td>
-                {{ post.created_date }}
+                {{ post.created_date | date:'Y-m-d' }}
             </td>
             <td>
-                {{ post.published_date }}
+                {{ post.published_date | date:'Y-m-d' }}
             </td>
         </tr>
         {% endfor %}
