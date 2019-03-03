@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
@@ -8,8 +9,7 @@ from django.dispatch import receiver
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete = models.CASCADE)
     title = models.CharField(max_length=200, null=False, blank=False)
-    # content = models.TextField(null=False, blank=False)
-    content = RichTextField(null=False, blank=False)
+    content = RichTextUploadingField(null=False, blank=False)
     upload = models.ImageField(upload_to='%Y/%m/%d/', null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(default=timezone.now)
